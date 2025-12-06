@@ -1,0 +1,12 @@
+CREATE DATABASE spring_api;
+
+USE spring_api;
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    idade INT NOT NULL
+);
+
+select * from usuarios;
