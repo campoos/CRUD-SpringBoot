@@ -15,10 +15,10 @@ import java.util.Optional;
 @RequestMapping("/usuarios")
 public class UserController {
 
-    // Instanciando o service para uso aqui na controller
+    // Declarando variável
     private final UserService userService;
 
-    // Construtor da controller
+    // Instanciando a partir da variável
     public UserController(UserService userService){
         this.userService = userService;
     }

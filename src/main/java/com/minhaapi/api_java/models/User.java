@@ -1,7 +1,11 @@
 package com.minhaapi.api_java.models;
 
 //Para mapear objetos java para o banco com @Entity, @Table, @Id, @Column, etc.:
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Definindo que a clasee java vai referenciar uma tabela no banco de dados
 @Entity
@@ -24,6 +28,10 @@ public class User {
 
     @Column(nullable = false)
     private int idade;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Carro> carros = new ArrayList<>();
 
     public User(){}
 
@@ -48,6 +56,10 @@ public class User {
 
     public int getIdade(){
         return idade;
+    }
+
+    public List<Carro> getCarros(){
+        return carros;
     }
 
     public void setNome(String nome){
