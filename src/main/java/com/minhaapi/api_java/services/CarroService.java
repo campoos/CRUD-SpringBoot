@@ -51,19 +51,19 @@ public class CarroService {
         Carro carroExistente = carroRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Carro não encontrado"));
 
-            carroExistente.setMarca(dto.getMarca());
-            carroExistente.setModelo(dto.getModelo());
-            carroExistente.setAno(dto.getAno());
+        carroExistente.setMarca(dto.getMarca());
+        carroExistente.setModelo(dto.getModelo());
+        carroExistente.setAno(dto.getAno());
 
-            // Atualiza o usuario (se veio no DTO)
-            if (dto.getIdUsuario() != null) {
-                User usuario = usuarioRepository.findById(dto.getIdUsuario())
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+        // Atualiza o usuario (se veio no DTO)
+        if (dto.getIdUsuario() != null) {
+            User usuario = usuarioRepository.findById(dto.getIdUsuario())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
-                carroExistente.setUsuario(usuario);
-            }
+            carroExistente.setUsuario(usuario);
+        }
 
-            return carroRepository.save(carroExistente);
+        return carroRepository.save(carroExistente);
     }
 
     public Boolean deleteCarro(Long id){

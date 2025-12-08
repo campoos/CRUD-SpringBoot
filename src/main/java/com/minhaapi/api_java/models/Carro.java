@@ -1,7 +1,11 @@
 package com.minhaapi.api_java.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "carros")
@@ -31,6 +35,11 @@ public class Carro {
     //A variavel id_usuario ele cria automaticamente
     @JsonBackReference
     private User usuario;
+
+    //cascade serve para falar que tudo o que acontecer no pai afeta o filho
+    @OneToMany(mappedBy = "carro", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Multa> multas = new ArrayList<>();
 
     public Carro(){}
 
