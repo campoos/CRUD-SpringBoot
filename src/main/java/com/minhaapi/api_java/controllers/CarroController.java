@@ -48,7 +48,7 @@ public class CarroController {
         if (carroAtualizado != null){
             return ResponseEntity.ok(carroAtualizado);
         } else {
-            return ResponseEntity.status(404).body("Usuário não encontrado.");
+            return ResponseEntity.status(404).body("Carro não encontrado.");
         }
     }
 

@@ -41,6 +41,15 @@ public class Carro {
     @JsonManagedReference
     private List<Multa> multas = new ArrayList<>();
 
+    @ManyToMany
+    @JsonManagedReference
+    @JoinTable(
+            name = "carro_cor",
+            joinColumns = @JoinColumn(name = "id_carro"),
+            inverseJoinColumns = @JoinColumn(name = "id_cor")
+    )
+    private List<Cor> cores = new ArrayList<>();
+
     public Carro(){}
 
     //Construtor
@@ -85,5 +94,13 @@ public class Carro {
 
     public void setUsuario(User usuario){
         this.usuario = usuario;
+    }
+
+    public List<Cor> getCores(){
+        return cores;
+    }
+
+    public void setCores(List<Cor> cores){
+        this.cores = cores;
     }
 }

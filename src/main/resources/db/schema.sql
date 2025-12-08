@@ -23,21 +23,6 @@ CREATE TABLE carros (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE manutencoes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    descricao VARCHAR(200) NOT NULL,
-    data DATE NOT NULL,
-    quilometragem INT NOT NULL,
-    valor DECIMAL(10,2) NOT NULL,
-
-    id_carro INT NOT NULL,
-    CONSTRAINT fk_manutencao_carro
-        FOREIGN KEY (id_carro)
-        REFERENCES carros(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
 CREATE TABLE multas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo_infracao VARCHAR(150) NOT NULL,

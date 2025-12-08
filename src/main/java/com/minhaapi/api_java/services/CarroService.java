@@ -4,6 +4,7 @@ import com.minhaapi.api_java.dto.CarroDTO;
 import com.minhaapi.api_java.models.Carro;
 import com.minhaapi.api_java.models.User;
 import com.minhaapi.api_java.repositories.CarroRepository;
+import com.minhaapi.api_java.repositories.CorRepository;
 import com.minhaapi.api_java.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,12 @@ public class CarroService {
 
     private final CarroRepository carroRepository;
     private final UsuarioRepository usuarioRepository;
+    private final CorRepository corRepository;
 
-    public CarroService(CarroRepository carroRepository, UsuarioRepository usuarioRepository) {
+    public CarroService(CarroRepository carroRepository, UsuarioRepository usuarioRepository, CorRepository corRepository) {
         this.carroRepository = carroRepository;
         this.usuarioRepository = usuarioRepository;
+        this.corRepository = corRepository;
     }
 
     public List<Carro> getAllCarros(){
@@ -44,6 +47,14 @@ public class CarroService {
         carro.setAno(dto.getAno());
         carro.setUsuario(usuario);
 
+        if(dto.getCoresIds() != null){
+            dto.getCoresIds().forEach(idCor -> {
+                var cor = corRepository.findById(idCor)
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cor ID \" + idCor + \" não encontrada"));
+                carro.getCores().add(cor);
+            });
+        }
+
         return carroRepository.save(carro);
     }
 
@@ -61,6 +72,15 @@ public class CarroService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
             carroExistente.setUsuario(usuario);
+        }
+
+        if(dto.getCoresIds() != null){
+            carroExistente.getCores().clear(); //removendo as cores para atualizar
+            dto.getCoresIds().forEach(idCor -> {
+                var cor = corRepository.findById(idCor)
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cor ID \" + idCor + \" não encontrada"));
+                carroExistente.getCores().add(cor);
+            });
         }
 
         return carroRepository.save(carroExistente);
